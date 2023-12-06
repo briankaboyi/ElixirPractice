@@ -46,8 +46,8 @@ defmodule Ruff do
     result = fn ar,br -> IO.puts("#{ar} + #{br} is #{ar+br}") end
     result.(a,b)
   end
-  
-  def gtest(:fn1, a) do
+
+  def gtest(:fn, a) do
 
     result = fn arg -> IO.puts("#{arg} is king") end
     result.(a)
@@ -55,7 +55,22 @@ defmodule Ruff do
 
   end
 
+  def gtest(:capture, a,b) do
+    result = &(IO.puts("#{&1} plus #{&2} is #{&1+&2}"))
+    result.(a,b)
+  end
+
+  def gtest(_unk,_unk1,_unk2)do
+    {:error,"invalid arguments"}
+  end
+  
+  def gtest(:capture,a) do
+    result = &("#{&1} is king")
+    result.(a)
+  end
 
 
-
+  def gtest(_unk,_unk1) do
+    {:error, "invalid arguments"}
+  end
 end
